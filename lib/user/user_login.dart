@@ -1,14 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Admin_login extends StatefulWidget {
-  const Admin_login({super.key});
+class User_logIn extends StatefulWidget {
+  const User_logIn({super.key});
 
   @override
-  State<Admin_login> createState() => _Admin_loginState();
+  State<User_logIn> createState() => _User_logInState();
 }
 
-class _Admin_loginState extends State<Admin_login> {
+class _User_logInState extends State<User_logIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +22,7 @@ class _Admin_loginState extends State<Admin_login> {
               child: Image.asset("assets/image/mechanic.jpg"),
             ),
             Text("LOGIN", style: TextStyle(
-            fontSize: 25, fontWeight: FontWeight.bold
+                fontSize: 25, fontWeight: FontWeight.bold
             ),
             ),
             Padding(
@@ -35,7 +34,7 @@ class _Admin_loginState extends State<Admin_login> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                     borderSide: BorderSide(
-                      style: BorderStyle.solid
+                        style: BorderStyle.solid
                     ),
                   ),
                 ),
@@ -59,6 +58,13 @@ class _Admin_loginState extends State<Admin_login> {
                 ),
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(onPressed: (){},
+                    child: Text("Forgot Your Password?", style: TextStyle(fontSize: 13),)),
+              ],
+            ),
             SizedBox(
               height: 20,
             ),
@@ -74,13 +80,21 @@ class _Admin_loginState extends State<Admin_login> {
                   foregroundColor: Colors.white,
                   elevation: 30,
                 ),
-                  child: Text("LOGIN", style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  ),
+                child: Text("LOGIN", style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+                ),
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("don't have an account?", style: TextStyle(fontSize: 13),),
+                TextButton(onPressed: (){},
+                    child: Text("Sign Up", style: TextStyle(fontSize: 13),)),
+              ],
+            )
           ],
         ),
       ),

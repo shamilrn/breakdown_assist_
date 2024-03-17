@@ -1,14 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Admin_login extends StatefulWidget {
-  const Admin_login({super.key});
+class User_signIn extends StatefulWidget {
+  const User_signIn({super.key});
 
   @override
-  State<Admin_login> createState() => _Admin_loginState();
+  State<User_signIn> createState() => _User_signInState();
 }
 
-class _Admin_loginState extends State<Admin_login> {
+class _User_signInState extends State<User_signIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +22,7 @@ class _Admin_loginState extends State<Admin_login> {
               child: Image.asset("assets/image/mechanic.jpg"),
             ),
             Text("LOGIN", style: TextStyle(
-            fontSize: 25, fontWeight: FontWeight.bold
+                fontSize: 25, fontWeight: FontWeight.bold
             ),
             ),
             Padding(
@@ -35,14 +34,50 @@ class _Admin_loginState extends State<Admin_login> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                     borderSide: BorderSide(
-                      style: BorderStyle.solid
+                        style: BorderStyle.solid
                     ),
                   ),
                 ),
               ),
             ),
             SizedBox(
-              height: 7,
+              height: 12,
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  hintText: "Enter Your Phone Number",
+                  labelText: "Phone Number",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide(
+                        style: BorderStyle.solid
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  hintText: "Enter Your e-mail",
+                  labelText: "e-mail",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide(
+                        style: BorderStyle.solid
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 12,
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
@@ -60,7 +95,7 @@ class _Admin_loginState extends State<Admin_login> {
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 30,
             ),
             Container(
               height: 50,
@@ -74,13 +109,16 @@ class _Admin_loginState extends State<Admin_login> {
                   foregroundColor: Colors.white,
                   elevation: 30,
                 ),
-                  child: Text("LOGIN", style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  ),
+                child: Text("SIGN UP", style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+                ),
               ),
             ),
+            SizedBox(
+              height: 100,
+            )
           ],
         ),
       ),
