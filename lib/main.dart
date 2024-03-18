@@ -3,8 +3,11 @@ import 'package:breakdown_assist/user/user_signin.dart';
 import 'package:breakdown_assist/userormechpg.dart';
 import 'package:flutter/material.dart';
 
+import 'admin/admin_add_notification.dart';
 import 'admin/admin_homeuser.dart';
 import 'admin/admin_login.dart';
+import 'admin/admin_mechanic.dart';
+import 'admin/admin_user.dart';
 import 'admin/tabs_admin/admin_tab_home.dart';
 import 'mechanic/mech_edit_profile.dart';
 import 'mechanic/mech_login.dart';
@@ -22,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Admin_home_user(),
+      home: Admin_Add_Notification(),
     );
   }
 }
