@@ -20,15 +20,6 @@ class _Mech_Bottombar_TabsState extends State<Mech_Bottombar_Tabs> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: CircleAvatar(
-          backgroundImage: AssetImage("assets/image/profile.jpg"),
-        ),
-        actions: [
-          IconButton(onPressed: (){}, icon:Icon(Icons.notifications),
-          ),
-        ],
-      ),
       bottomNavigationBar: BottomNavigationBar(items: [
         BottomNavigationBarItem(
             label: "Request",
@@ -38,9 +29,18 @@ class _Mech_Bottombar_TabsState extends State<Mech_Bottombar_Tabs> {
             icon: Icon(Icons.home_repair_service),),
         BottomNavigationBarItem(
             label: "Rating",
-            icon: Icon(Icons.eighteen_up_rating),),
+            icon: Icon(Icons.eighteen_up_rating),
+        ),
       ],
+        iconSize: 30,
+        currentIndex: selectedstate_,
+        onTap: (int index){
+        setState(() {
+          selectedstate_= index;
+        });
+        },
       ),
+      body: tabs_.elementAt(selectedstate_),
     );
   }
 }

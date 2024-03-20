@@ -17,6 +17,15 @@ class _Request_State extends State<Request_> {
       length: 2,
       initialIndex: 0,
       child: Scaffold(
+        appBar: AppBar(
+          leading: CircleAvatar(
+            backgroundImage: AssetImage("assets/image/profile.jpg"),
+          ),
+          actions: [
+            IconButton(onPressed: (){}, icon:Icon(Icons.notifications),
+            ),
+          ],
+        ),
         body: Column(
           children: [
             TabBar(tabs: [
