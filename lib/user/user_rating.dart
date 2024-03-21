@@ -105,7 +105,7 @@ class _User_RatingState extends State<User_Rating> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)
                     ),
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Colors.purple,
                     foregroundColor: Colors.white
                 ),
                 onPressed: (){},

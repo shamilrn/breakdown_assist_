@@ -117,8 +117,8 @@ class _User_Mech_Bill_PageState extends State<User_Mech_Bill_Page> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)
                       ),
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white
+                      backgroundColor: Colors.purple,
+                      foregroundColor: Colors.white,
                   ),
                   onPressed: (){},
                   child: Text("Payment",style: TextStyle(fontSize: 20),))
