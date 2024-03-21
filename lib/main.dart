@@ -12,6 +12,7 @@ import 'admin/tabs_admin/admin_tab_home.dart';
 import 'mechanic/mech_bottom_bar_tabs.dart';
 import 'mechanic/mech_edit_profile.dart';
 import 'mechanic/mech_login.dart';
+import 'mechanic/mech_service_acc_or_rej.dart';
 import 'mechanic/mech_signup.dart';
 
 void main() {
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Mech_Bottombar_Tabs(),
+      home: Ser_Acce_or_Reject(),
     );
   }
 }
