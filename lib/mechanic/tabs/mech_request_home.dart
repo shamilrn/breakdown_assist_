@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../mech_notification.dart';
 import 'mech_request_home_acceptpg.dart';
 import 'mech_request_home_reqpg.dart';
 
@@ -22,7 +23,10 @@ class _Request_State extends State<Request_> {
             backgroundImage: AssetImage("assets/image/profile.jpg"),
           ),
           actions: [
-            IconButton(onPressed: (){}, icon:Icon(Icons.notifications),
+            IconButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder:(context)=>Mech_Notification() ),
+              );
+            }, icon:Icon(Icons.notifications),
             ),
           ],
         ),

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'admin_homeuser.dart';
+
 class Admin_login extends StatefulWidget {
   const Admin_login({super.key});
 
@@ -9,6 +11,14 @@ class Admin_login extends StatefulWidget {
 }
 
 class _Admin_loginState extends State<Admin_login> {
+  var name = TextEditingController();
+  var password= TextEditingController();
+  login(){
+    if(name.text == 'admin@gmail.com' && password.text == '123'){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Admin_home_user()),
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +39,7 @@ class _Admin_loginState extends State<Admin_login> {
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
               child: TextFormField(
+                controller: name,
                 decoration: InputDecoration(
                   hintText: "Enter Your Username",
                   labelText: "Username",
@@ -47,6 +58,9 @@ class _Admin_loginState extends State<Admin_login> {
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
               child: TextFormField(
+                controller: password,
+                obscureText: true,
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   hintText: "Enter Your Password",
                   labelText: "Password",
@@ -65,7 +79,9 @@ class _Admin_loginState extends State<Admin_login> {
             Container(
               height: 50,
               width: 200,
-              child: ElevatedButton(onPressed: (){},
+              child: ElevatedButton(onPressed: (){
+                login();
+              },
                 style: ElevatedButton.styleFrom(
                   shape: ContinuousRectangleBorder(
                       side: BorderSide(color: Colors.purple)
