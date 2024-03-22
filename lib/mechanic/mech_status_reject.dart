@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Mech_Status_Completed extends StatefulWidget {
-  const Mech_Status_Completed({super.key});
+class Mech_Status_Reject extends StatefulWidget {
+  const Mech_Status_Reject({super.key});
 
   @override
-  State<Mech_Status_Completed> createState() => _Mech_Status_CompletedState();
+  State<Mech_Status_Reject> createState() => _Mech_Status_RejectState();
 }
 
-class _Mech_Status_CompletedState extends State<Mech_Status_Completed> {
+class _Mech_Status_RejectState extends State<Mech_Status_Reject> {
   int _value = 1;
   @override
   Widget build(BuildContext context) {
@@ -111,27 +111,28 @@ class _Mech_Status_CompletedState extends State<Mech_Status_Completed> {
                   height: 30,
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 225, 0),
-                  child: Text("Amount",style: TextStyle(fontSize: 25)),
+                  padding: const EdgeInsets.fromLTRB(0, 0, 175, 0),
+                  child: Text("Reject reason",style: TextStyle(fontSize: 25)),
                 ),
                 SizedBox(
                   height:20 ,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 90
+                Container(
+                  height: 150,
+                  width: 300,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                      borderRadius:BorderRadius.circular(10)
                   ),
-                  child: TextField(
+                  child: TextFormField(
+                    maxLines: 5,
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10)
-                        ),
-                        prefixIcon: Icon(Icons.currency_rupee)
+                        border: InputBorder.none
                     ),
                   ),
                 ),
                 SizedBox(
-                  height: 100,
+                  height: 30,
                 ),
                 ElevatedButton(
                     style:ElevatedButton.styleFrom(

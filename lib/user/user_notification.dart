@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-class Mech_Notification extends StatefulWidget {
-  const Mech_Notification({super.key});
+class User_Notification extends StatefulWidget {
+  const User_Notification({super.key});
 
   @override
-  State<Mech_Notification> createState() => _Mech_NotificationState();
+  State<User_Notification> createState() => _User_NotificationState();
 }
 
-class _Mech_NotificationState extends State<Mech_Notification> {
+class _User_NotificationState extends State<User_Notification> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.purple,
-          title: Text("Notification",style: TextStyle(fontSize: 30, color: Colors.white),),
+          title: Text("Notification",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30, color: Colors.white),),
           centerTitle: true,
         ),
         body: ListView.separated(
@@ -21,7 +21,10 @@ class _Mech_NotificationState extends State<Mech_Notification> {
             itemCount: 2,
             itemBuilder: (BuildContext context,int index) {
               return Padding(
-                padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+                padding: const EdgeInsets.symmetric(
+                    vertical: 5,
+                    horizontal: 20
+                ),
                 child: Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
@@ -37,16 +40,16 @@ class _Mech_NotificationState extends State<Mech_Notification> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text("Admin Notification",style: TextStyle(fontSize: 20)),
+                          Text("Admin Notification",style: TextStyle(fontSize: 20),),
                           SizedBox(
                             width: 40,
                           ),
-                          Text("Time",style: TextStyle(fontSize: 15)),
+                          Text("Time",style: TextStyle(fontSize: 15),),
                         ],
                       ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(280, 40, 0, 0),
-                        child: Text("Date",style: TextStyle(fontSize: 15)),
+                        padding: const EdgeInsets.fromLTRB(260, 40, 0, 0),
+                        child: Text("Date",style: TextStyle(fontSize: 15),),
                       ),
                     ],
                   ),

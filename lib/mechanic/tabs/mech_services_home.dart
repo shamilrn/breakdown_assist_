@@ -11,6 +11,7 @@ class _Service_State extends State<Service_> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: (){}, child: Icon(Icons.add),),
       appBar: AppBar(
         title: Text("Service", style: TextStyle(color: Colors.white),),
         centerTitle: true,
