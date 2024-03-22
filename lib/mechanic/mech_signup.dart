@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
+import 'mech_login.dart';
 
 class Mech_signUp extends StatefulWidget {
   const Mech_signUp({super.key});
@@ -8,6 +11,27 @@ class Mech_signUp extends StatefulWidget {
 }
 
 class _Mech_signUpState extends State<Mech_signUp> {
+  var username = TextEditingController();
+  var phnnum = TextEditingController();
+  var email = TextEditingController();
+  var wrkexp = TextEditingController();
+  var wrkshop = TextEditingController();
+
+  Future<dynamic> mechsignin()async{
+    await FirebaseFirestore.instance.collection('mech sign in').add({
+      "username": username.text,
+      "phone num": phnnum.text,
+      "email": email.text,
+      "work exp": wrkexp.text,
+      "workshop": wrkshop.text,
+    }).then((value){
+      print("complete");
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>Mech_login())
+      );
+      print("Sign in Success");
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,13 +45,14 @@ class _Mech_signUpState extends State<Mech_signUp> {
               width: 300,
               child: Image.asset("assets/image/mechanic.jpg"),
             ),
-            Text("LOGIN", style: TextStyle(
+            Text("SIGN UP", style: TextStyle(
                 fontSize: 25, fontWeight: FontWeight.bold
             ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
               child: TextFormField(
+                controller: username,
                 decoration: InputDecoration(
                   hintText: "Enter Your Username",
                   labelText: "Username",
@@ -46,6 +71,7 @@ class _Mech_signUpState extends State<Mech_signUp> {
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
               child: TextFormField(
+                controller: phnnum,
                 decoration: InputDecoration(
                   hintText: "Enter Your Phone Number",
                   labelText: "Phone Number",
@@ -64,6 +90,7 @@ class _Mech_signUpState extends State<Mech_signUp> {
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
               child: TextFormField(
+                controller: email,
                 decoration: InputDecoration(
                   hintText: "Enter Your e-mail",
                   labelText: "e-mail",
@@ -82,6 +109,7 @@ class _Mech_signUpState extends State<Mech_signUp> {
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
               child: TextFormField(
+                controller: wrkexp,
                 decoration: InputDecoration(
                   hintText: "Enter Your Work Experience",
                   labelText: "Work Experience",
@@ -100,6 +128,7 @@ class _Mech_signUpState extends State<Mech_signUp> {
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
               child: TextFormField(
+                controller: wrkshop,
                 decoration: InputDecoration(
                   hintText: "Enter Your Workshop Name",
                   labelText: "Workshop Name",
@@ -136,7 +165,9 @@ class _Mech_signUpState extends State<Mech_signUp> {
             Container(
               height: 50,
               width: 200,
-              child: ElevatedButton(onPressed: (){},
+              child: ElevatedButton(onPressed: (){
+                mechsignin();
+              },
                 style: ElevatedButton.styleFrom(
                   shape: ContinuousRectangleBorder(
                     side: BorderSide(color: Colors.purple)

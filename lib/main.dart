@@ -5,6 +5,9 @@ import 'package:breakdown_assist/user/user_signin.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
+import 'admin/admin_homeuser.dart';
+import 'mechanic/mech_signup.dart';
+
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -19,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: User_Payment_page(),
+      home: Admin_home_user(),
     );
   }
 }
