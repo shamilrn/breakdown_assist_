@@ -5,8 +5,10 @@ import 'package:breakdown_assist/user/user_signin.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
+import 'admin/admin_add_notification.dart';
 import 'admin/admin_homeuser.dart';
 import 'mechanic/mech_signup.dart';
+import 'mechanic/mech_status_completed.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Admin_home_user(),
+      home: Mech_Status_Completed(),
     );
   }
 }
