@@ -16,6 +16,7 @@ class _Mech_signUpState extends State<Mech_signUp> {
   var email = TextEditingController();
   var wrkexp = TextEditingController();
   var wrkshop = TextEditingController();
+  var passwrd = TextEditingController();
 
   Future<dynamic> mechsignin()async{
     await FirebaseFirestore.instance.collection('mech sign in').add({
@@ -24,6 +25,8 @@ class _Mech_signUpState extends State<Mech_signUp> {
       "email": email.text,
       "work exp": wrkexp.text,
       "workshop": wrkshop.text,
+      "status": 0,
+      "password": passwrd.text,
     }).then((value){
       print("complete");
       Navigator.push(context, MaterialPageRoute(builder: (context)=>Mech_login())
@@ -147,6 +150,7 @@ class _Mech_signUpState extends State<Mech_signUp> {
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
               child: TextFormField(
+                controller: passwrd,
                 decoration: InputDecoration(
                   hintText: "Enter Your Password",
                   labelText: "Password",

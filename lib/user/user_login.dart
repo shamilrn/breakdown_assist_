@@ -1,4 +1,10 @@
+
+
+import 'package:breakdown_assist/user/tabs/user_mech_tabbar.dart';
+import 'package:breakdown_assist/user/user_mech_details.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class User_logIn extends StatefulWidget {
   const User_logIn({super.key});
@@ -9,6 +15,17 @@ class User_logIn extends StatefulWidget {
 
 class _User_logInState extends State<User_logIn> {
   final _key = GlobalKey<FormState>();
+
+  var username = TextEditingController();
+  var password = TextEditingController();
+
+  String mail_id= '';
+ // String password_ = '';
+  String phone_number ='';
+  String username_ = '';
+  String id ='';
+  //String status= '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +33,7 @@ class _User_logInState extends State<User_logIn> {
       // backgroundColor: Colors.blueGrey,
       body: SingleChildScrollView(
         child: Form(
-
+           key: _key,
           child: Column(
             children: [
               Container(
@@ -31,6 +48,13 @@ class _User_logInState extends State<User_logIn> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
                 child: TextFormField(
+                  controller: username,
+                  validator: (value){
+                    if(value== null || value.isEmpty){
+                      return 'Please enter your username';
+                    }
+                    return null;
+                  },
                   decoration: InputDecoration(
                     hintText: "Enter Your Username",
                     labelText: "Username",
@@ -49,6 +73,13 @@ class _User_logInState extends State<User_logIn> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
                 child: TextFormField(
+                  controller: password,
+                  validator: (value){
+                    if(value== null || value.isEmpty){
+                      return 'Please enter your username';
+                    }
+                    return null;
+                  },
                   obscureText: true,
                   decoration: InputDecoration(
                     hintText: "Enter Your Password",
@@ -75,7 +106,9 @@ class _User_logInState extends State<User_logIn> {
               Container(
                 height: 50,
                 width: 200,
-                child: ElevatedButton(onPressed: (){},
+                child: ElevatedButton(onPressed: (){
+                  userLogIn();
+                },
                   style: ElevatedButton.styleFrom(
                     shape: ContinuousRectangleBorder(
                         side: BorderSide(color: Colors.purple)
@@ -105,4 +138,36 @@ class _User_logInState extends State<User_logIn> {
       ),
     );
   }
+  void userLogIn() async {
+    print("3333");
+    final user = await FirebaseFirestore.instance
+        .collection('user sign in')
+        .where('mail id', isEqualTo: username.text)
+        .where('password', isEqualTo: password.text)
+        //.where('status', isEqualTo: 1)
+        .get();
+    print("object");
+    if(user.docs.isNotEmpty){
+      id = user.docs[0].id;
+      mail_id = user.docs[0]['mail id'];
+      //password_ = user.docs[0]['password'];
+      phone_number = user.docs[0]['phone number'];
+      username_ = user.docs[0]['username'];
+      //status = user.docs[0]['status'];
+
+print("object");
+      SharedPreferences data = await SharedPreferences.getInstance();
+      data.setString('id', id);
+      data.setString('mail id', mail_id);
+     // data.setString('password', password_);
+      data.setString('phone number', phone_number);
+      data.setString('username', username_);
+
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>User_Mech_tabbar()
+      )
+      );
+
+    }
+
+}
 }

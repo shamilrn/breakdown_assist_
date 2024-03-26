@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../mech_notification.dart';
+import '../mech_profile.dart';
 import 'mech_request_home_acceptpg.dart';
 import 'mech_request_home_reqpg.dart';
 
@@ -19,8 +20,14 @@ class _Request_State extends State<Request_> {
       initialIndex: 0,
       child: Scaffold(
         appBar: AppBar(
-          leading: CircleAvatar(
-            backgroundImage: AssetImage("assets/image/profile.jpg"),
+          leading: InkWell(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>Mech_Profile())
+              );
+            },
+            child: CircleAvatar(
+              backgroundImage: AssetImage("assets/image/profile.jpg"),
+            ),
           ),
           actions: [
             IconButton(onPressed: (){
