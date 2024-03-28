@@ -124,7 +124,10 @@ class _Mech_Edit_ProfileState extends State<Mech_Edit_Profile> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(50, 110, 0, 0),
                       child: Container(
-                        child: IconButton(onPressed: (){}, icon: Icon(Icons.camera_alt_outlined)),
+                        child: IconButton(onPressed: (){
+                          pickimage();
+
+                        }, icon: Icon(Icons.camera_alt_outlined)),
                       ),
                     ),
                   ],
@@ -258,7 +261,9 @@ class _Mech_Edit_ProfileState extends State<Mech_Edit_Profile> {
               height: 50,
               width: 200,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                },
                 style: ElevatedButton.styleFrom(
                   shape: ContinuousRectangleBorder(
                       side: BorderSide(color: Colors.purple)),

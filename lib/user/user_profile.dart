@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class User_Profile extends StatefulWidget {
@@ -10,6 +15,51 @@ class User_Profile extends StatefulWidget {
 }
 
 class _User_ProfileState extends State<User_Profile> {
+
+  var imageURL;
+  XFile? _image;
+
+  Future<void> pickimage() async {
+    final ImagePicker _picker = ImagePicker();
+    try {
+      XFile? pickedimage = await _picker.pickImage(source: ImageSource.gallery);
+      if (pickedimage != null) {
+        setState(() {
+          _image = pickedimage;
+        });
+        print("Image upload succersfully");
+        await uploadimage();
+      }
+    } catch (e) {
+      print("Error picking image:$e");
+    }
+  }
+
+  Future<void> uploadimage() async {
+    try {
+      if (_image != null) {
+        Reference storrageReference =
+        FirebaseStorage.instance.ref().child('profile/${_image!.path}');
+        await storrageReference.putFile(File(_image!.path));
+        imageURL = await storrageReference.getDownloadURL();
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text(
+              "Uploaded succesfully",
+              style: TextStyle(color: Colors.green),
+            )));
+
+        FirebaseFirestore.instance
+            .collection("user sign in")
+            .doc(ID)
+            .update({"path": imageURL});
+        print("/////////picked$imageURL");
+      } else
+        CircularProgressIndicator();
+    } catch (e) {
+      print("Error uploading image:$e");
+    }
+  }
+
   @override
   void initState() {
     getdata();
@@ -28,8 +78,10 @@ class _User_ProfileState extends State<User_Profile> {
 
   DocumentSnapshot? _user;
   getUpdatedata() async {
-    _user =
-        await FirebaseFirestore.instance.collection('user sign in').doc(ID).get();
+    _user = await FirebaseFirestore.instance
+        .collection('user sign in')
+        .doc(ID)
+        .get();
     print('object4');
   }
 
@@ -56,12 +108,32 @@ class _User_ProfileState extends State<User_Profile> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      height: 150,
-                      width: 150,
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage("assets/image/profile.jpg"),
+                    Stack(
+                      children: [
+                      _user!['path']==''?  Container(
+                          height: 150,
+                          width: 150,
+                          child: CircleAvatar(
+                            backgroundImage:
+                                AssetImage("assets/image/profile.jpg"),
+                          ),
+                        ): Container(
+                        height: 150,
+                        width: 150,
+                        child: CircleAvatar(
+                          backgroundImage: NetworkImage(_user!['path']),
+                        ),
                       ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(50, 110, 0, 0),
+                          child: Container(
+                            child: IconButton(onPressed: (){
+                              pickimage();
+
+                            }, icon: Icon(Icons.camera_alt_outlined)),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -88,7 +160,7 @@ class _User_ProfileState extends State<User_Profile> {
                   padding: const EdgeInsets.fromLTRB(50, 5, 50, 0),
                   child: TextFormField(
                     decoration: InputDecoration(
-hintText: _user!["phone number"],
+                      hintText: _user!["phone number"],
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
                         borderSide: BorderSide(style: BorderStyle.solid),
@@ -103,7 +175,7 @@ hintText: _user!["phone number"],
                   padding: const EdgeInsets.fromLTRB(50, 5, 50, 0),
                   child: TextFormField(
                     decoration: InputDecoration(
-                       hintText: _user!["mail id"],
+                      hintText: _user!["mail id"],
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
                         borderSide: BorderSide(style: BorderStyle.solid),

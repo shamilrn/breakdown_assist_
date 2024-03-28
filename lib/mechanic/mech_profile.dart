@@ -94,13 +94,19 @@ class _Mech_ProfileState extends State<Mech_Profile> {
                     SizedBox(
                       height: 20,
                     ),
-                    Container(
+                    mech!['path']==''? Container(
                       height: 150,
                       width: 150,
                       child: CircleAvatar(
                         backgroundImage: AssetImage("assets/image/profile.jpg"),
                       ),
-                    ),
+                    ):Container(
+                      height: 150,
+                      width: 150,
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage(mech!['path']),
+                      ),
+                    )
                   ],
                 ),
                 SizedBox(

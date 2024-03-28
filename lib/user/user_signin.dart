@@ -23,7 +23,8 @@ class _User_signInState extends State<User_signIn> {
       "phone number": phonenum.text,
       "mail id": email.text,
       "password": password.text,
-      "status": 0
+      "status": 0,
+      "path": "",
     }).then((value) {
       print("complete");
       Navigator.push(context, MaterialPageRoute(builder: (context)=>User_logIn()
