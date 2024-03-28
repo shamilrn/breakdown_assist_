@@ -26,6 +26,7 @@ class _Mech_signUpState extends State<Mech_signUp> {
       "work exp": wrkexp.text,
       "workshop": wrkshop.text,
       "status": 0,
+      "path": "",
       "password": passwrd.text,
     }).then((value){
       print("complete");

@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Mech_Edit_Profile extends StatefulWidget {
@@ -10,60 +15,119 @@ class Mech_Edit_Profile extends StatefulWidget {
 }
 
 class _Mech_Edit_ProfileState extends State<Mech_Edit_Profile> {
-  
   var username_ = TextEditingController();
   var phnnum = TextEditingController();
   var email = TextEditingController();
   var wrkexp = TextEditingController();
   var wrkshop = TextEditingController();
-  
+
   var ID = '';
-  
-  void initState(){
+
+  var imageURL;
+  XFile? _image;
+
+  void initState() {
     getData();
     super.initState();
-    
   }
-  
-  void getData()async{
+
+  void getData() async {
     final data = await SharedPreferences.getInstance();
     ID = data.getString('id')!;
-    
+
     setState(() {});
   }
-  
-  updateProfile()async{
-    await FirebaseFirestore.instance.collection("mech sign up").doc(ID).update(
-        {
-         "username": username_.text,
-         "email" : email.text,
-          "phone num" : phnnum.text,
-          "work exp" : wrkexp.text,
-          "workshop" : wrkshop.text,
+
+
+  Future<void> pickimage() async {
+    final ImagePicker _picker = ImagePicker();
+    try {
+      XFile? pickedimage = await _picker.pickImage(source: ImageSource.gallery);
+      if (pickedimage != null) {
+        setState(() {
+          _image = pickedimage;
         });
+        print("Image upload succersfully");
+        await uploadimage();
+      }
+    } catch (e) {
+      print("Error picking image:$e");
+    }
+  }
+
+  Future<void> uploadimage() async {
+    try {
+      if (_image != null) {
+        Reference storrageReference =
+        FirebaseStorage.instance.ref().child('profile/${_image!.path}');
+        await storrageReference.putFile(File(_image!.path));
+        imageURL = await storrageReference.getDownloadURL();
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text(
+              "Uploaded succesfully",
+              style: TextStyle(color: Colors.green),
+            )));
+
+        FirebaseFirestore.instance
+            .collection("mech sign in")
+            .doc(ID)
+            .update({"path": imageURL});
+        print("/////////picked$imageURL");
+      } else
+        CircularProgressIndicator();
+    } catch (e) {
+      print("Error uploading image:$e");
+    }
+  }
+
+  updateProfile() async {
+    await FirebaseFirestore.instance.collection("mech sign up").doc(ID).update({
+      "username": username_.text,
+      "email": email.text,
+      "phone num": phnnum.text,
+      "work exp": wrkexp.text,
+      "workshop": wrkshop.text,
+    });
     Navigator.pop(context);
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("EDIT PROFILE", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),),
+        title: Text(
+          "EDIT PROFILE",
+          style: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
         centerTitle: true,
         backgroundColor: Colors.purple,
-      ),      body: SingleChildScrollView(
+      ),
+      body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 35,),
+            SizedBox(
+              height: 35,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  height: 150,
-                  width: 150,
-                  child: CircleAvatar(
-                    backgroundImage:AssetImage("assets/image/profile.jpg"),
-                  ),
+                Stack(
+                  children: [
+                    Container(
+                      height: 150,
+                      width: 150,
+                      child: CircleAvatar(
+                        backgroundImage: AssetImage("assets/image/profile.jpg"),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(50, 110, 0, 0),
+                      child: Container(
+                        child: IconButton(onPressed: (){}, icon: Icon(Icons.camera_alt_outlined)),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -98,9 +162,7 @@ class _Mech_Edit_ProfileState extends State<Mech_Edit_Profile> {
                   labelText: "Username",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide(
-                        style: BorderStyle.solid
-                    ),
+                    borderSide: BorderSide(style: BorderStyle.solid),
                   ),
                 ),
               ),
@@ -117,9 +179,7 @@ class _Mech_Edit_ProfileState extends State<Mech_Edit_Profile> {
                   labelText: "Phone Number",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide(
-                        style: BorderStyle.solid
-                    ),
+                    borderSide: BorderSide(style: BorderStyle.solid),
                   ),
                 ),
               ),
@@ -136,9 +196,7 @@ class _Mech_Edit_ProfileState extends State<Mech_Edit_Profile> {
                   labelText: "e-mail",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide(
-                        style: BorderStyle.solid
-                    ),
+                    borderSide: BorderSide(style: BorderStyle.solid),
                   ),
                 ),
               ),
@@ -155,9 +213,7 @@ class _Mech_Edit_ProfileState extends State<Mech_Edit_Profile> {
                   labelText: "Work Experience",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide(
-                        style: BorderStyle.solid
-                    ),
+                    borderSide: BorderSide(style: BorderStyle.solid),
                   ),
                 ),
               ),
@@ -173,9 +229,7 @@ class _Mech_Edit_ProfileState extends State<Mech_Edit_Profile> {
                   labelText: "Location",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide(
-                        style: BorderStyle.solid
-                    ),
+                    borderSide: BorderSide(style: BorderStyle.solid),
                   ),
                 ),
               ),
@@ -192,9 +246,7 @@ class _Mech_Edit_ProfileState extends State<Mech_Edit_Profile> {
                   labelText: "Shop Name",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide(
-                        style: BorderStyle.solid
-                    ),
+                    borderSide: BorderSide(style: BorderStyle.solid),
                   ),
                 ),
               ),
@@ -205,19 +257,21 @@ class _Mech_Edit_ProfileState extends State<Mech_Edit_Profile> {
             Container(
               height: 50,
               width: 200,
-              child: ElevatedButton(onPressed: (){},
+              child: ElevatedButton(
+                onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   shape: ContinuousRectangleBorder(
-                      side: BorderSide(color: Colors.purple)
-                  ),
+                      side: BorderSide(color: Colors.purple)),
                   backgroundColor: Colors.purple,
                   foregroundColor: Colors.white,
                   elevation: 30,
                 ),
-                child: Text("DONE", style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                ),
+                child: Text(
+                  "DONE",
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
