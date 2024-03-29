@@ -77,15 +77,12 @@ class _User_Mech_tabbarState extends State<User_Mech_tabbar> {
                 ),
               ),
             ),
-            body: Expanded(
-              flex: 1,
-              child: TabBarView(children: [
-              User_Mech_list(),
-              User_Req_List(),
+            body: TabBarView(children: [
+            User_Mech_list(),
+            User_Req_List(),
 
-            ],
-            ),
-            ),
+                        ],
+                        ),
 
 
       ),
