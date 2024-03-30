@@ -66,6 +66,7 @@ class _User_Mech_Details_PageState extends State<User_Mech_Details_Page> {
     print('getfb');
     await FirebaseFirestore.instance.collection('mechreq').add({
       'place': location.text,
+      "userid": ID,
       'service': dropdownvalue,
       'status': 0,
       'payment': 0,
