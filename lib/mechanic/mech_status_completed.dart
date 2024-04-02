@@ -1,18 +1,38 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Mech_Status_Completed extends StatefulWidget {
-  const Mech_Status_Completed({super.key});
+  const Mech_Status_Completed({super.key,required this.id});
+  final id;
 
   @override
   State<Mech_Status_Completed> createState() => _Mech_Status_CompletedState();
 }
 
 class _Mech_Status_CompletedState extends State<Mech_Status_Completed> {
-  int _value = 1;
   var a,b,c;
   var amount = TextEditingController();
   var reject = TextEditingController();
   String gender ="";
+
+  void payment(id){
+    setState(() {
+      FirebaseFirestore.instance
+          .collection('mechreq')
+          .doc(id)
+          .update({'payment': "3", "amount":amount.text });
+    });
+  }
+
+  void paymentreject(id){
+    setState(() {
+      FirebaseFirestore.instance
+          .collection('mechreq')
+          .doc(id)
+          .update({'payment': "4", "workfailedreason": reject.text });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,11 +98,10 @@ class _Mech_Status_CompletedState extends State<Mech_Status_Completed> {
                   width: double.infinity,
                   child: Column(children: [
                     RadioListTile(
-                        activeColor: Colors.blue,
                         title: Text(
                           "Completed",
                           style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w900),
+                              fontSize: 15, fontWeight: FontWeight.bold),
                         ),
                         value: "b",
                         groupValue: gender,
@@ -96,7 +115,7 @@ class _Mech_Status_CompletedState extends State<Mech_Status_Completed> {
                           });
                         }),
                     RadioListTile(
-                        activeColor: Colors.blue,
+                        activeColor: Colors.purple,
                         title: Text("Not completed",
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w900)),
@@ -129,6 +148,7 @@ class _Mech_Status_CompletedState extends State<Mech_Status_Completed> {
                             horizontal: 90
                         ),
                         child: TextField(
+                          controller: amount,
                           decoration: InputDecoration(
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10)
@@ -149,7 +169,11 @@ class _Mech_Status_CompletedState extends State<Mech_Status_Completed> {
                             backgroundColor: Colors.purple,
                             foregroundColor: Colors.white,
                           ),
-                          onPressed: (){},
+                          onPressed: (){
+                            payment(widget.id);
+
+                            Navigator.of(context).pop();
+                          },
                           child: Text("Submit",style: TextStyle(fontSize: 20),
                           ),
                       ),
@@ -171,6 +195,7 @@ class _Mech_Status_CompletedState extends State<Mech_Status_Completed> {
                             borderRadius:BorderRadius.circular(10)
                         ),
                         child: TextFormField(
+                          controller: reject,
                           maxLines: 5,
                           decoration: InputDecoration(
                               border: InputBorder.none
@@ -189,7 +214,11 @@ class _Mech_Status_CompletedState extends State<Mech_Status_Completed> {
                             backgroundColor: Colors.purple,
                             foregroundColor: Colors.white,
                           ),
-                          onPressed: (){},
+                          onPressed: (){
+                            paymentreject(widget.id);
+
+                            Navigator.of(context).pop();
+                          },
                           child: Text("Submit",style: TextStyle(fontSize: 20),))
                     ],
                   ): Text("Choose an option"),
