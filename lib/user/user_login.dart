@@ -2,6 +2,7 @@
 
 import 'package:breakdown_assist/user/tabs/user_mech_tabbar.dart';
 import 'package:breakdown_assist/user/user_mech_details.dart';
+import 'package:breakdown_assist/user/user_signin.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -128,7 +129,10 @@ class _User_logInState extends State<User_logIn> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("don't have an account?", style: TextStyle(fontSize: 13),),
-                  TextButton(onPressed: (){},
+                  TextButton(onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>User_signIn())
+                    );
+                  },
                       child: Text("Sign Up", style: TextStyle(fontSize: 13),)),
                 ],
               )

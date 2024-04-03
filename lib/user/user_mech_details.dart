@@ -32,15 +32,15 @@ class _User_Mech_Details_PageState extends State<User_Mech_Details_Page> {
   TimeOfDay time = TimeOfDay.now();
 
   int select = 0;
-  String dropdownvalue = 'Oil Leakage';
+  String ?dropdownvalue;
 
-  var items = [
-    'Oil Leakage',
-    'Tyre Puncture',
-    'Engine Oil Change',
-    'Brake Oil Filling',
-    'A/c Repair',
-  ];
+  // var items = [
+  //   'Oil Leakage',
+  //   'Tyre Puncture',
+  //   'Engine Oil Change',
+  //   'Brake Oil Filling',
+  //   'A/c Repair',
+  // ];
 
   late DocumentSnapshot mechlist;
 
@@ -77,7 +77,8 @@ class _User_Mech_Details_PageState extends State<User_Mech_Details_Page> {
       'date': DateFormat('dd/MM/yyyy').format(date),
       // 'location': placectrl.text,
       'mechid': widget.id,
-      "mechname": mechlist['username']
+      "mechname": mechlist['username'],
+      "experienc": mechlist['work experience'],
     });
     print("object2");
   }
@@ -124,31 +125,35 @@ class _User_Mech_Details_PageState extends State<User_Mech_Details_Page> {
                   ),
                   Text(
                     mechlist["username"],
-                    style: TextStyle(fontSize: 25),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
                     height: 10,
                   ),
-                  Text(mechlist["phone num"], style: TextStyle(fontSize: 20)),
+                  Text(mechlist["phone num"], style: TextStyle(fontSize: 15)),
                   SizedBox(
                     height: 5,
                   ),
                   Text(
                     mechlist["work exp"],
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 15),
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   Container(
+                    height: 30,
+                    width: 100,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(color: Colors.white),
                       color: Colors.green.shade400,
                     ),
-                    child: Text(
-                      "Available",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    child: Center(
+                      child: Text(
+                        "Available",
+                        style: TextStyle(color: Colors.white, fontSize: 15),
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -156,45 +161,110 @@ class _User_Mech_Details_PageState extends State<User_Mech_Details_Page> {
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 130, 0),
-                    child: Text("Add Needed Service",
-                        style: TextStyle(fontSize: 20)),
+                    child: Text("Add Needed Service:",
+                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        width: 250,
-                        decoration: BoxDecoration(
-                            color: Colors.purple.shade50,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                          child: DropdownButton(
-                            value: dropdownvalue,
-                            icon: const Icon(Icons.keyboard_arrow_down),
-                            items: items.map((String items) {
-                              return DropdownMenuItem(
-                                value: items,
-                                child: Text(items),
-                              );
-                            }).toList(),
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                dropdownvalue = newValue!;
-                                print(dropdownvalue);
-                              });
-                            },
-                          ),
-                        ),
+                      StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('services')
+                            .where("mechid", isEqualTo: widget.id)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const SizedBox();
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else {
+                            List<String> tradeList = snapshot.data!.docs
+                                .map((DocumentSnapshot document) =>
+                                document['service'].toString())
+                                .toList();
+
+                            return Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      border:
+                                      Border.all(color: Colors.black54),
+                                      borderRadius:
+                                      BorderRadius.circular(8)),
+                                  child: DropdownButton<String>(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 3),
+                                    underline: const SizedBox(),
+                                    borderRadius: BorderRadius.circular(10),
+                                    hint: const Text(
+                                        "choose your needed service"),
+                                    value: dropdownvalue,
+                                    // Set initial value if needed
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        dropdownvalue = newValue!;
+                                        print(dropdownvalue);
+                                      });
+                                    },
+
+                                    items: tradeList
+                                        .map<DropdownMenuItem<String>>(
+                                            (String value) =>
+                                            DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(value),
+                                            ))
+                                        .toList(),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+                        },
                       ),
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(size: 35, Icons.add_circle_rounded))
+                      const SizedBox(
+                        width: 20,
+                      )
                     ],
                   ),
+
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     Container(
+                  //       width: 250,
+                  //       decoration: BoxDecoration(
+                  //           color: Colors.purple.shade50,
+                  //           borderRadius: BorderRadius.circular(10)),
+                  //       child: Padding(
+                  //         padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                  //         child: DropdownButton(
+                  //           value: dropdownvalue,
+                  //           icon: const Icon(Icons.keyboard_arrow_down),
+                  //           items: items.map((String items) {
+                  //             return DropdownMenuItem(
+                  //               value: items,
+                  //               child: Text(items),
+                  //             );
+                  //           }).toList(),
+                  //           onChanged: (String? newValue) {
+                  //             setState(() {
+                  //               dropdownvalue = newValue!;
+                  //               print(dropdownvalue);
+                  //             });
+                  //           },
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     IconButton(
+                  //         onPressed: () {},
+                  //         icon: Icon(size: 35, Icons.add_circle_rounded))
+                  //   ],
+                  // ),
                   SizedBox(
                     height: 20,
                   ),

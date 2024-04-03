@@ -18,13 +18,13 @@ class _User_Mech_Bill_PageState extends State<User_Mech_Bill_Page> {
 
   getdata() async {
     detail = await FirebaseFirestore.instance
-        .collection('request')
+        .collection('mechreq')
         .doc(widget.id)
         .get();
   }
 
   void payment(id) {
-    FirebaseFirestore.instance.collection('request').doc(id).update({
+    FirebaseFirestore.instance.collection('mechreq').doc(id).update({
       'payment': 5,
       'rating': rating,
     }).then((value) => Navigator.pushReplacement(
@@ -36,11 +36,11 @@ class _User_Mech_Bill_PageState extends State<User_Mech_Bill_Page> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue.shade200,
+        backgroundColor: Colors.purple,
         centerTitle: true,
         title: Text(
           "Mechanic Bill",
-          style: TextStyle(fontSize: 25),
+          style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
       body: FutureBuilder(
@@ -125,17 +125,13 @@ class _User_Mech_Bill_PageState extends State<User_Mech_Bill_Page> {
                     SizedBox(
                       height: 20,
                     ),
-                    Container(
-                      width: 200,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.black,
-                          ),
-                          borderRadius: BorderRadius.circular(10)),
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
                       child: TextFormField(
                         readOnly: true,
                         style: TextStyle(fontSize: 25),
                         decoration: InputDecoration(
+                          border: OutlineInputBorder(),
                             prefixIcon: Icon(Icons.currency_rupee),
                             hintText: detail['workamount']),
                       ),

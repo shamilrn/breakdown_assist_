@@ -82,7 +82,7 @@ final mechlist = snapshot.data?.docs ??[];
                                   borderRadius: BorderRadius.circular(15),
                                   color: CupertinoColors.activeGreen,
                                 ),
-                                child: Center(child: Text("Available")),
+                                child: Center(child: Text("Available", style: TextStyle(color: Colors.white),)),
                               ),
                             ],
                           ),

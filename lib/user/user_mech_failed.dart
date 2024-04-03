@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class User_Mech_Failed_Page extends StatefulWidget {
-  const User_Mech_Failed_Page({super.key});
-
+  const User_Mech_Failed_Page({super.key, required this.id});
+final id;
   @override
   State<User_Mech_Failed_Page> createState() => _User_Mech_Failed_PageState();
 }
@@ -14,9 +14,9 @@ class _User_Mech_Failed_PageState extends State<User_Mech_Failed_Page> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue.shade200,
+        backgroundColor: Colors.purple,
         centerTitle: true,
-        title: Text("Mechanic Bill",style: TextStyle(fontSize: 25),),
+        title: Text("Mechanic Bill",style: TextStyle(fontSize: 25, color: Colors.white),),
       ),
       body: SingleChildScrollView(
         child: Center(

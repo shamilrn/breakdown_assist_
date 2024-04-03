@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Mech_Add_Service extends StatefulWidget {
   const Mech_Add_Service({super.key});
@@ -8,100 +10,177 @@ class Mech_Add_Service extends StatefulWidget {
 }
 
 class _Mech_Add_ServiceState extends State<Mech_Add_Service> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: AlertDialog(
-        title: Center(
-          child: Text("Add service"),
-        ),
-        titleTextStyle: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: Colors.black
-        ),
-        content: Container(
-          height: 200,
-          width: 300,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextField(
-                decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    focusedBorder: UnderlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                        )
-                    )
-                ),
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)
-                    ),
-                    backgroundColor: Colors.purple,
-                    foregroundColor: Colors.white,
-                  ),
-                  onPressed: (){},
-                  child: Text("Add",style: TextStyle(fontSize: 20),))
-            ],
-          ),
-        ),
-      ),
+  var servicectrl = TextEditingController();
 
-    );
-  }
+@override
+void initState() {
+  // TODO: implement initState
+  super.initState();
+  getmechdetails();
 }
 
+var ID = '';
 
-Add()=> AlertDialog(
-  backgroundColor: Colors.purple.shade50,
-  title: Center(
-    child: Text("Add service"),
-  ),
-  titleTextStyle: TextStyle(
-      fontSize: 30,
-      fontWeight: FontWeight.bold,
-      color: Colors.black
-  ),
-  content: Container(
-    height: 200,
-    width: 300,
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        TextField(
-          decoration: InputDecoration(
-              filled: true,
-              fillColor: Colors.white,
-              focusedBorder: UnderlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(
-                      color: Colors.purple.shade50
-                  )
-              )
-          ),
-        ),
-        SizedBox(
-          height: 40,
-        ),
-        ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(0)
+void getmechdetails() async {
+  final mechservice = await SharedPreferences.getInstance();
+
+  ID = mechservice.getString('id')!;
+
+  setState(() {});
+}
+
+final _key = GlobalKey<FormState>();
+
+final Snack =
+SnackBar(duration: Duration(seconds: 3), content: Text("Service added"));
+
+Future<dynamic> Submitservice() async {
+  await FirebaseFirestore.instance
+      .collection('services')
+      .add({'service': servicectrl.text, 'mechid': ID}).then((value) {
+    Navigator.pop(context);
+    servicectrl.clear();
+  });
+}
+
+void delete(id) {
+  FirebaseFirestore.instance
+      .collection('services')
+      .doc(id)
+      .delete()
+      .then((value) {
+    setState(() {});
+  }).catchError((error) {
+    print("Failed to delete service: $error");
+  });
+}
+
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    backgroundColor: Colors.white,
+    floatingActionButton: FloatingActionButton(
+      backgroundColor: Colors.white,
+      onPressed: () {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              backgroundColor: Colors.blue.shade200,
+              title: Center(
+                child: Text("Add service"),
               ),
-              backgroundColor: Colors.purple,
-              foregroundColor: Colors.white,
-            ),
-            onPressed: (){},
-            child: Text("Add",style: TextStyle(fontSize: 20),))
-      ],
+              titleTextStyle: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+              content: SizedBox(
+                height: 200,
+                width: 300,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Form(
+                      key: _key,
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return '*Required';
+                          }
+                          return null;
+                        },
+                        controller: servicectrl,
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            focusedBorder: UnderlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                    color: Colors.blue.shade200))),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30)),
+                          backgroundColor: Colors.blue,
+                          foregroundColor: Colors.white,
+                        ),
+                        onPressed: () {
+                          if (_key.currentState!.validate()) {
+                            Submitservice();
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(Snack);
+                          }
+                        },
+                        child: Text(
+                          "Add",
+                          style: TextStyle(fontSize: 20),
+                        ))
+                  ],
+                ),
+              ),
+            ));
+      },
+      child: Icon(size: 50, Icons.add),
     ),
-  ),
-);
+    appBar: AppBar(
+      backgroundColor: Colors.blue.shade300,
+      title: Text(
+        "Services",
+        style: TextStyle(fontSize: 30),
+      ),
+      centerTitle: true,
+    ),
+    body: Padding(
+      padding: const EdgeInsets.fromLTRB(10, 10, 10, 5),
+      child: Card(
+        color: Colors.lightBlue.shade50,
+        child: FutureBuilder(
+            future: FirebaseFirestore.instance
+                .collection('services')
+                .where('mechid', isEqualTo: ID)
+                .get(),
+            builder: (BuildContext context,
+                AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text("Error:${snapshot.error}"),
+                );
+              }
+              final serv = snapshot.data?.docs ?? [];
+              return ListView.separated(
+                  shrinkWrap: true,
+                  separatorBuilder: (context, index) => Divider(
+                    thickness: 1,
+                    color: Colors.black,
+                  ),
+                  itemCount: serv.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      title: Text(
+                        serv[index]['service'],
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      trailing: IconButton(
+                        onPressed: () {
+                          delete(serv[index].id);
+                        },
+                        icon: Icon(Icons.delete),
+                        iconSize: 30,
+                      ),
+                    );
+                  });
+            }),
+      ),
+    ),
+  );
+}
+}

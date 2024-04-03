@@ -20,7 +20,7 @@ class _Mech_Status_CompletedState extends State<Mech_Status_Completed> {
       FirebaseFirestore.instance
           .collection('mechreq')
           .doc(id)
-          .update({'payment': "3", "amount":amount.text });
+          .update({'payment': 3, "workamount":amount.text });
     });
   }
 
@@ -29,7 +29,7 @@ class _Mech_Status_CompletedState extends State<Mech_Status_Completed> {
       FirebaseFirestore.instance
           .collection('mechreq')
           .doc(id)
-          .update({'payment': "4", "workfailedreason": reject.text });
+          .update({'payment': 4, "workfailedreason": reject.text });
     });
   }
 
