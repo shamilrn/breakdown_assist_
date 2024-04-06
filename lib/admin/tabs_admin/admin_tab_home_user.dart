@@ -38,7 +38,7 @@ class _Admin_user_home_tabState extends State<Admin_user_home_tab> {
             final user = snapshot.data?.docs ?? [];
         return ListView.separated(
           separatorBuilder: (context, index) =>
-              Divider(thickness: 5, color: Colors.white,),
+              Divider(thickness: 0, color: Colors.white,),
           itemCount: user.length,
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
@@ -46,35 +46,41 @@ class _Admin_user_home_tabState extends State<Admin_user_home_tab> {
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>Admin_User(id: user[index].id,))
                 );
               },
-              child: Container(
-                height: 100,
-                width: 200,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 20,
-                    ),
-                    CircleAvatar(
-                      radius: 40,
-                      backgroundImage: AssetImage("assets/image/profile.jpg"),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(user[index]['username'], style: TextStyle(
-                            fontSize: 12, fontWeight: FontWeight.bold),),
-                        Text("Location", style: TextStyle(fontSize: 12)),
-                        Text(user[index]['phone number'], style: TextStyle(fontSize: 12)),
-                        Text(user[index]['mail id'], style: TextStyle(fontSize: 12)),
-                      ],
-                    )
-                  ],
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.purple.shade50,
+                  ),
+                  height: 100,
+                  width: 200,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 20,
+                      ),
+                      CircleAvatar(
+                        radius: 40,
+                        backgroundImage: AssetImage("assets/image/profile.jpg"),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(user[index]['username'], style: TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.bold),),
+                          Text("Location", style: TextStyle(fontSize: 12)),
+                          Text(user[index]['phone number'], style: TextStyle(fontSize: 12)),
+                          Text(user[index]['mail id'], style: TextStyle(fontSize: 12)),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             );

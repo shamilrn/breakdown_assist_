@@ -44,34 +44,40 @@ class _Admin_mechanic_tab_homeState extends State<Admin_mechanic_tab_home> {
         Navigator.push(context, MaterialPageRoute(builder: (context)=>Admin_Mechanic(id: mech[index].id,))
         );
       },
-      child: Container(
-      height: 100,
-      width: 200,
-      child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-      SizedBox(
-      width: 20,
-      ),
-      CircleAvatar(
-      radius: 40,
-      backgroundImage: AssetImage("assets/image/profile.jpg"),
-      ),
-      SizedBox(
-      width: 20,
-      ),
-      Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-      Text(mech[index]['username'],style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
-      Text(mech[index]['phone num'],style: TextStyle(fontSize: 12)),
-      Text(mech[index]['work exp'],style: TextStyle(fontSize: 12)),
-      ],
-      )
-      ],
-      )
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.purple.shade50,
+          ),
+        height: 100,
+        width: 200,
+        child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+        SizedBox(
+        width: 20,
+        ),
+        CircleAvatar(
+        radius: 40,
+        backgroundImage: NetworkImage(mech[index]['path']),
+        ),
+        SizedBox(
+        width: 20,
+        ),
+        Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+        Text(mech[index]['username'],style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
+        Text(mech[index]['phone num'],style: TextStyle(fontSize: 12)),
+        Text(mech[index]['work exp'],style: TextStyle(fontSize: 12)),
+        ],
+        )
+        ],
+        )
+        ),
       ),
     );
     }

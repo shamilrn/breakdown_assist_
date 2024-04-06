@@ -57,13 +57,13 @@ class _Admin_UserState extends State<Admin_User> {
                     height: 150,
                     width: 150,
                     child: CircleAvatar(
-                      backgroundImage: AssetImage("assets/image/profile.jpg"),
+                      backgroundImage: NetworkImage(user['path']),
                     ),
                   ),
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Name", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                  Text(user['username'], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
                   SizedBox(
                     height: 10,
                   ),
@@ -128,6 +128,7 @@ class _Admin_UserState extends State<Admin_User> {
                   SizedBox(
                     height: 40,
                   ),
+                  user['status']==0?
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -169,8 +170,26 @@ class _Admin_UserState extends State<Admin_User> {
                         ),
                       ),
                     ],
-                  )
-                ],
+                  ):
+                      user['status']==1?
+                      Container(
+                        height: 50,
+                        width: 200,
+                        decoration: BoxDecoration(
+                          color: Colors.purple,
+                        ),
+                        child: Center(child: Text("ACCEPTED",
+                          style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),)),
+                      )
+                          : Container(
+                        height: 50,
+                        width: 200,
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                        ),
+                        child: Center(child: Text("REJECTED",
+                          style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),)),
+                      )                ],
               ),
             );
           },

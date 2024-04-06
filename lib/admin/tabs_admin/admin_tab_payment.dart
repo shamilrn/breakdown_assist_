@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Payment_ extends StatefulWidget {
@@ -11,61 +12,60 @@ class _Payment_State extends State<Payment_> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: 330,
-          child: ListView.separated(separatorBuilder: (context,index)=> Divider(thickness: 5,color: Colors.white,),
-            itemCount: 10,
-            itemBuilder: (BuildContext context, int index){
-              return Container(
-                height: 100,
-                width: 150,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 10,
+        backgroundColor: Colors.white,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 5),
+          child: FutureBuilder(
+              future: FirebaseFirestore.instance.collection('mechreq').where('payment', isEqualTo: 5).get(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text("Error:${snapshot.error}"),
+                  );
+                }
+                final details = snapshot.data?.docs ?? [];
+                return ListView.builder(
+                    itemCount: details.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        color: Colors.purple.shade50,
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(30, 5, 15, 5),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    details[index]['username'],
+                                    style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(details[index]['date'], style: TextStyle(fontSize: 15)),
+                                ],
+                              ),
+                              Text(details[index]['workamount'], style: TextStyle(fontSize: 15)),
+                              Text(details[index]['service'], style: TextStyle(fontSize: 15)),
+                              Text(details[index]['mechname'],
+                                  style: TextStyle(fontSize: 15)),
+                              SizedBox(
+                                width: 90,
+                              ),
+                            ],
+                          ),
                         ),
-                        Text("Name", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),),
-                        Spacer(),
-                        Text("11/04/2024", style: TextStyle(fontSize: 12),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 5,),
-                    Row(
-                        children:[
-                          SizedBox(width: 10,),
-                          Text("Rs 5400/-"),
-                        ]
-                    ),
-                    SizedBox(height: 10,),
-                    Row(
-                        children:[
-                          SizedBox(width: 10,),
-                          Text("Service"),
-                        ]
-                    ),
-                    SizedBox(height: 5,),
-                    Row(
-                        children:[
-                          SizedBox(width: 10,),
-                          Text("Mechanic name"),
-                        ]
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        ),
-      ),
-    );
+                      );
+                    });
+              }),
+        ));
   }
 }
 

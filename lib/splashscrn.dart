@@ -1,4 +1,5 @@
 import 'package:breakdown_assist/user/user_login.dart';
+import 'package:breakdown_assist/userormechpg.dart';
 import 'package:flutter/material.dart';
 
 class Splashscreen extends StatefulWidget {
@@ -15,7 +16,7 @@ class _SplashscreenState extends State<Splashscreen> {
   }
   Tohome()async{
     await Future.delayed(Duration(seconds: 4),(){});
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>User_logIn())
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>UserOrMech())
     );
   }
   @override
