@@ -67,7 +67,7 @@ class _Admin_UserState extends State<Admin_User> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Location", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                  Text(user['location'], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
                   SizedBox(
                     height: 10,
                   ),

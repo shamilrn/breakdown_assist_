@@ -16,6 +16,7 @@ class _User_signInState extends State<User_signIn> {
   var phonenum = TextEditingController();
   var email = TextEditingController();
   var password = TextEditingController();
+  var lctn = TextEditingController();
 
   Future<dynamic> usersignin()async{
     await FirebaseFirestore.instance.collection('user sign in').add({
@@ -23,6 +24,7 @@ class _User_signInState extends State<User_signIn> {
       "phone number": phonenum.text,
       "mail id": email.text,
       "password": password.text,
+      "location": lctn.text,
       "status": 0,
       "path": "",
     }).then((value) {
@@ -102,6 +104,25 @@ class _User_signInState extends State<User_signIn> {
                 decoration: InputDecoration(
                   hintText: "Enter Your e-mail",
                   labelText: "e-mail",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide(
+                        style: BorderStyle.solid
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
+              child: TextFormField(
+                controller: lctn,
+                decoration: InputDecoration(
+                  hintText: "Enter Your Location",
+                  labelText: "Location",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                     borderSide: BorderSide(

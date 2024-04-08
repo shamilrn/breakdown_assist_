@@ -15,7 +15,8 @@ class _User_RatingState extends State<User_Rating> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.blue.shade200,
+        backgroundColor: Colors.purple,
+        foregroundColor: Colors.white,
         centerTitle: true,
         title: Text("Your Rating",style: TextStyle(fontSize: 25),),
       ),
@@ -28,7 +29,7 @@ class _User_RatingState extends State<User_Rating> {
             ),
             CircleAvatar(
               radius: 60,
-              backgroundImage: AssetImage("Assets/profile img.png"),
+              backgroundImage: AssetImage("assets/image/profile.jpg"),
             ),
             SizedBox(
               height: 10,

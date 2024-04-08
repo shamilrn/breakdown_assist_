@@ -77,7 +77,7 @@ class _Admin_MechanicState extends State<Admin_Mechanic> {
                     height: 10,
                   ),
                   Text(
-                    "Location",
+                    mech['location'],
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                   SizedBox(
@@ -234,16 +234,22 @@ class _Admin_MechanicState extends State<Admin_Mechanic> {
                         )
                       : mech['status'] == 1
                           ? Container(
+                    height: 50,
+                    width: 200,
                               decoration: BoxDecoration(
                                 color: Colors.purple,
                               ),
-                              child: Center(child: Text("Accepted")),
+                              child: Center(child: Text("ACCEPTED",
+                                style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),)),
                             )
                           : Container(
+                    height: 50,
+                    width: 200,
                               decoration: BoxDecoration(
                                 color: Colors.red,
                               ),
-                              child: Center(child: Text("Rejected")),
+                              child: Center(child: Text("REJECTED",
+                                style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),)),
                             )
                 ],
               ),

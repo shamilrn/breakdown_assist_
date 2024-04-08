@@ -1,3 +1,4 @@
+import 'package:breakdown_assist/user/tabs/user_mech_tabbar.dart';
 import 'package:flutter/material.dart';
 
 class User_Payment_page extends StatefulWidget {
@@ -31,7 +32,10 @@ class _User_Payment_pageState extends State<User_Payment_page> {
               Container(
                 height: 50,
                 width: 200,
-                child: ElevatedButton(onPressed: (){},
+                child: ElevatedButton(onPressed: (){
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>User_Mech_tabbar())
+                  );
+                },
                   style: ElevatedButton.styleFrom(
                     shape: ContinuousRectangleBorder(
                         side: BorderSide(color: Colors.purple)

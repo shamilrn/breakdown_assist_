@@ -20,12 +20,14 @@ class _Request_State extends State<Request_> {
       initialIndex: 0,
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.purple,
           leading: InkWell(
             onTap: (){
               Navigator.push(context, MaterialPageRoute(builder: (context)=>Mech_Profile())
               );
             },
             child: CircleAvatar(
+              radius: 10,
               backgroundImage: AssetImage("assets/image/profile.jpg"),
             ),
           ),
@@ -33,13 +35,17 @@ class _Request_State extends State<Request_> {
             IconButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder:(context)=>Mech_Notification() ),
               );
-            }, icon:Icon(Icons.notifications),
+            }, icon:Icon(Icons.notifications, color: Colors.white,),
             ),
           ],
         ),
         body: Column(
           children: [
-            TabBar(tabs: [
+            SizedBox(
+              height: 10,
+            ),
+            TabBar(
+              tabs: [
               Tab(
                 child: Text("Requests"),
               ),

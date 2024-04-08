@@ -17,6 +17,7 @@ class _Mech_signUpState extends State<Mech_signUp> {
   var wrkexp = TextEditingController();
   var wrkshop = TextEditingController();
   var passwrd = TextEditingController();
+  var lctn = TextEditingController();
 
   Future<dynamic> mechsignin()async{
     await FirebaseFirestore.instance.collection('mech sign in').add({
@@ -24,6 +25,7 @@ class _Mech_signUpState extends State<Mech_signUp> {
       "phone num": phnnum.text,
       "email": email.text,
       "work exp": wrkexp.text,
+      "location": lctn.text,
       "workshop": wrkshop.text,
       "status": 0,
       "path": "",
@@ -79,6 +81,25 @@ class _Mech_signUpState extends State<Mech_signUp> {
                 decoration: InputDecoration(
                   hintText: "Enter Your Phone Number",
                   labelText: "Phone Number",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide(
+                        style: BorderStyle.solid
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
+              child: TextFormField(
+                controller: lctn,
+                decoration: InputDecoration(
+                  hintText: "Enter Your Location",
+                  labelText: "Location",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                     borderSide: BorderSide(

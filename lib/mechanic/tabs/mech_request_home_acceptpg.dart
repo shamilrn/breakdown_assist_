@@ -45,23 +45,29 @@ class _Mech_AcceptPgState extends State<Mech_AcceptPg> {
                   );
                 },
                 child: Container(
-                  height: 100,
+                  decoration: BoxDecoration(
+                    color: Colors.purple.shade50
+                  ),
+                  height: 130,
                   width: 200,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(
-                        width: 20,
+                        width: 30,
                       ),
-                      Column(
-                        children: [
-                          CircleAvatar(
-                            radius: 40,
-                            backgroundImage: AssetImage("assets/image/profile.jpg"),
-                          ),
-                          Text(detail[index]['username'],style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 12, 0, 0),
+                        child: Column(
+                          children: [
+                            CircleAvatar(
+                              radius: 40,
+                              backgroundImage: AssetImage("assets/image/profile.jpg"),
+                            ),
+                            Text(detail[index]['username'],style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
+                          ],
+                        ),
                       ),
                       Spacer(),
                       SizedBox(

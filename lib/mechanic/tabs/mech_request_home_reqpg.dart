@@ -49,20 +49,23 @@ class _Mech_ReqPgState extends State<Mech_ReqPg> {
 
           return ListView.separated(
             separatorBuilder: (context, index) => Divider(
-              thickness: 2,
+              thickness: 1,
               color: Colors.white,
             ),
             itemCount: detail.length,
             itemBuilder: (BuildContext context, int index) {
               return Padding(
-                padding: const EdgeInsets.fromLTRB(0, 6, 0, 0),
+                padding: const EdgeInsets.fromLTRB(5, 6, 5, 0),
                 child: InkWell(
                   onTap: (){
                     Navigator.push(context, MaterialPageRoute(builder: (context)=>Ser_Acce_or_Reject(id: detail[index].id,)),
                     );
                   },
                   child: Container(
-                    height: 100,
+                    decoration: BoxDecoration(
+                      color: Colors.purple.shade50
+                    ),
+                    height: 130,
                     width: 200,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -71,19 +74,28 @@ class _Mech_ReqPgState extends State<Mech_ReqPg> {
                         SizedBox(
                           width: 20,
                         ),
-                        Column(
-                          children: [
-                            CircleAvatar(
-                              radius: 40,
-                              backgroundImage:
-                                  AssetImage("assets/image/profile.jpg"),
-                            ),
-                            Text(
-                              detail[index]['username'],
-                              style: TextStyle(
-                                  fontSize: 12, fontWeight: FontWeight.bold),
-                            ),
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                          child: Column(
+                            children: [
+                              // detail[index]['path']==''?
+                              CircleAvatar(
+                                radius: 40,
+                                backgroundImage:
+                                    AssetImage("assets/image/profile.jpg"),
+                              ),
+                              // CircleAvatar(
+                              //   radius: 40,
+                              //   backgroundImage:
+                              //   AssetImage("assets/image/profile.jpg"),
+                              // ),
+                              Text(
+                                detail[index]['username'],
+                                style: TextStyle(
+                                    fontSize: 12, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
                         ),
                         Spacer(),
                         SizedBox(

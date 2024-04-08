@@ -74,7 +74,7 @@ class _Admin_user_home_tabState extends State<Admin_user_home_tab> {
                         children: [
                           Text(user[index]['username'], style: TextStyle(
                               fontSize: 12, fontWeight: FontWeight.bold),),
-                          Text("Location", style: TextStyle(fontSize: 12)),
+                          Text(user[index]['location'], style: TextStyle(fontSize: 12)),
                           Text(user[index]['phone number'], style: TextStyle(fontSize: 12)),
                           Text(user[index]['mail id'], style: TextStyle(fontSize: 12)),
                         ],

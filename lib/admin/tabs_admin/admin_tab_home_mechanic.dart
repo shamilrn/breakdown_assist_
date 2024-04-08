@@ -71,6 +71,7 @@ class _Admin_mechanic_tab_homeState extends State<Admin_mechanic_tab_home> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
         Text(mech[index]['username'],style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
+          Text(mech[index]['location'], style: TextStyle(fontSize: 12)),
         Text(mech[index]['phone num'],style: TextStyle(fontSize: 12)),
         Text(mech[index]['work exp'],style: TextStyle(fontSize: 12)),
         ],
